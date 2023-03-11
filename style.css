@@ -1,0 +1,10 @@
+body{
+	background-color: #dddddd;
+	margin: 10px;
+}
+#canvas{
+	background-image: url(soccar.avif);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
