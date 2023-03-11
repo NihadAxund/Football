@@ -4,9 +4,9 @@ var out = document.getElementById("out");
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 var init = requestAnimationFrame(start);
-var player1 = new Player(100,250);
-var player2 = new Player(600,250);
-var ball = new Ball(350,250);
+var player1 = new Player(100, 250);
+var player2 = new Player(600, 250);
+var ball = new Ball(350, 250);
 var wDown = false;
 var sDown = false;
 var aDown = false;
@@ -15,7 +15,7 @@ var upDown = false;
 var downDown = false;
 var leftDown = false;
 var rightDown = false;
-function start(){
+function start() {
 	clear();
 	//renderBackground();
 	renderGates();
@@ -32,19 +32,19 @@ function start(){
 	requestAnimationFrame(start);
 }
 
-function Ball(x,y){
+function Ball(x, y) {
 	this.x = x;
 	this.y = y;
 	this.xVel = 0;
 	this.yVel = 0;
-	this.decel = 0.1;
-	this.size = 5;
+	this.decel = 0.07;
+	this.size = 10;
 }
 
-function Player(x,y){
+function Player(x, y) {
 	this.x = x;
 	this.y = y;
-	this.size = 20;
+	this.size = 40;
 	this.xVel = 0;
 	this.yVel = 0;
 	this.score = 0;
@@ -53,14 +53,14 @@ function Player(x,y){
 	this.maxSpeed = 3;
 }
 
-function reset(){
+function reset() {
 	var score1 = player1.score;
 	var score2 = player2.score;
-	player1 = new Player(100,250);
+	player1 = new Player(100, 250);
 	player1.score = score1;
-	player2 = new Player(600,250);
+	player2 = new Player(600, 250);
 	player2.score = score2;
-	ball = new Ball(350,250);
+	ball = new Ball(350, 250);
 	wDown = false;
 	sDown = false;
 	aDown = false;
@@ -71,25 +71,25 @@ function reset(){
 	rightDown = false;
 }
 
-function movePlayers(){
+function movePlayers() {
 	player1.x += player1.xVel;
 	player1.y += player1.yVel;
 	player2.x += player2.xVel;
 	player2.y += player2.yVel;
 }
 
-function checkPlayers_BallCollision(){
-	var p1_ball_distance = getDistance(player1.x,player1.y,ball.x,ball.y) - player1.size - ball.size;
-	if(p1_ball_distance < 0){
-		collide(ball,player1);
+function checkPlayers_BallCollision() {
+	var p1_ball_distance = getDistance(player1.x, player1.y, ball.x, ball.y) - player1.size - ball.size;
+	if (p1_ball_distance < 0) {
+		collide(ball, player1);
 	}
-	var p2_ball_distance = getDistance(player2.x,player2.y,ball.x,ball.y) - player2.size - ball.size;
-	if(p2_ball_distance < 0){
-		collide(ball,player2);
+	var p2_ball_distance = getDistance(player2.x, player2.y, ball.x, ball.y) - player2.size - ball.size;
+	if (p2_ball_distance < 0) {
+		collide(ball, player2);
 	}
 }
 
-function collide(cir1,cir2){
+function collide(cir1, cir2) {
 	var dx = (cir1.x - cir2.x) / (cir1.size);
 	var dy = (cir1.y - cir2.y) / (cir1.size);
 	cir2.xVel = -dx;
@@ -98,36 +98,36 @@ function collide(cir1,cir2){
 	cir1.yVel = dy;
 }
 
-function getDistance(x1,y1,x2,y2){
-	return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+function getDistance(x1, y1, x2, y2) {
+	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 
-function moveBall(){
-	if(ball.xVel !== 0){
-		if(ball.xVel > 0){
+function moveBall() {
+	if (ball.xVel !== 0) {
+		if (ball.xVel > 0) {
 			ball.xVel -= ball.decel;
-			if(ball.xVel < 0) ball.xVel = 0;
+			if (ball.xVel < 0) ball.xVel = 0;
 		} else {
 			ball.xVel += ball.decel;
-			if(ball.xVel > 0) ball.xVel = 0;
+			if (ball.xVel > 0) ball.xVel = 0;
 		}
 	}
-	if(ball.yVel !== 0){
-		if(ball.yVel > 0){
+	if (ball.yVel !== 0) {
+		if (ball.yVel > 0) {
 			ball.yVel -= ball.decel;
-			if(ball.yVel < 0) ball.yVel = 0;
+			if (ball.yVel < 0) ball.yVel = 0;
 		} else {
 			ball.yVel += ball.decel;
-			if(ball.yVel > 0) ball.yVel = 0;
+			if (ball.yVel > 0) ball.yVel = 0;
 		}
 	}
 	ball.x += ball.xVel;
 	ball.y += ball.yVel;
 }
 
-function checkBallBounds(){
-	if(ball.x + ball.size > canvas.width){
-		if(ball.y > 150 && ball.y < 350){
+function checkBallBounds() {
+	if (ball.x + ball.size > canvas.width) {
+		if (ball.y > 150 && ball.y < 350) {
 			player1.score++;
 			reset();
 			return;
@@ -135,8 +135,8 @@ function checkBallBounds(){
 		ball.x = canvas.width - ball.size;
 		ball.xVel *= -1.5;
 	}
-	if(ball.x - ball.size < 0){
-		if(ball.y > 150 && ball.y < 350){
+	if (ball.x - ball.size < 0) {
+		if (ball.y > 150 && ball.y < 350) {
 			player2.score++;
 			reset();
 			return;
@@ -144,246 +144,254 @@ function checkBallBounds(){
 		ball.x = 0 + ball.size;
 		ball.xVel *= -1.5;
 	}
-	if(ball.y + ball.size > canvas.height){
+	if (ball.y + ball.size > canvas.height) {
 		ball.y = canvas.height - ball.size;
 		ball.yVel *= -1.5;
 	}
-	if(ball.y - ball.size < 0){
+	if (ball.y - ball.size < 0) {
 		ball.y = 0 + ball.size;
 		ball.yVel *= -1.5;
 	}
 }
 
-function checkPlayersBounds(){
-	if(player1.x + player1.size > canvas.width){
+function checkPlayersBounds() {
+	if (player1.x + player1.size > canvas.width) {
 		player1.x = canvas.width - player1.size;
 		player1.xVel *= -0.5;
 	}
-	if(player1.x - player1.size < 0){
+	if (player1.x - player1.size < 0) {
 		player1.x = 0 + player1.size;
 		player1.xVel *= -0.5;
 	}
-	if(player1.y + player1.size > canvas.height){
+	if (player1.y + player1.size > canvas.height) {
 		player1.y = canvas.height - player1.size;
 		player1.yVel *= -0.5;
 	}
-	if(player1.y - player1.size < 0){
+	if (player1.y - player1.size < 0) {
 		player1.y = 0 + player1.size;
 		player1.yVel *= -0.5;
 	}
-	if(player2.x + player2.size > canvas.width){
+	if (player2.x + player2.size > canvas.width) {
 		player2.x = canvas.width - player2.size;
 		player2.xVel *= -0.5;
 	}
-	if(player2.x - player2.size < 0){
+	if (player2.x - player2.size < 0) {
 		player2.x = 0 + player2.size;
 		player2.xVel *= -0.5;
 	}
-	if(player2.y + player2.size > canvas.height){
+	if (player2.y + player2.size > canvas.height) {
 		player2.y = canvas.height - player2.size;
 		player2.yVel *= -0.5;
 	}
-	if(player2.y - player2.size < 0){
+	if (player2.y - player2.size < 0) {
 		player2.y = 0 + player2.size;
 		player2.yVel *= -0.5;
 	}
 }
 
-function checkKeyboardStatus(){
-	if(wDown){
-		if(player1.yVel > -player1.maxSpeed){
-			player1.yVel -= player1.accel;	
+function checkKeyboardStatus() {
+	if (wDown) {
+		if (player1.yVel > -player1.maxSpeed) {
+			player1.yVel -= player1.accel;
 		} else {
 			player1.yVel = -player1.maxSpeed;
 		}
 	} else {
-		if(player1.yVel < 0){
+		if (player1.yVel < 0) {
 			player1.yVel += player1.decel;
-			if(player1.yVel > 0) player1.yVel = 0;	
+			if (player1.yVel > 0) player1.yVel = 0;
 		}
 	}
-	if(sDown){
-		if(player1.yVel < player1.maxSpeed){
-			player1.yVel += player1.accel;	
+	if (sDown) {
+		if (player1.yVel < player1.maxSpeed) {
+			player1.yVel += player1.accel;
 		} else {
 			player1.yVel = player1.maxSpeed;
 		}
 	} else {
-		if(player1.yVel > 0){
+		if (player1.yVel > 0) {
 			player1.yVel -= player1.decel;
-			if(player1.yVel < 0) player1.yVel = 0;
+			if (player1.yVel < 0) player1.yVel = 0;
 		}
 	}
-	if(aDown){
-		if(player1.xVel > -player1.maxSpeed){
-			player1.xVel -= player1.accel;	
+	if (aDown) {
+		if (player1.xVel > -player1.maxSpeed) {
+			player1.xVel -= player1.accel;
 		} else {
 			player1.xVel = -player1.maxSpeed;
 		}
 	} else {
-		if(player1.xVel < 0){
+		if (player1.xVel < 0) {
 			player1.xVel += player1.decel;
-			if(player1.xVel > 0) player1.xVel = 0;	
+			if (player1.xVel > 0) player1.xVel = 0;
 		}
 	}
-	if(dDown){
-		if(player1.xVel < player1.maxSpeed){
-			player1.xVel += player1.accel;	
+	if (dDown) {
+		if (player1.xVel < player1.maxSpeed) {
+			player1.xVel += player1.accel;
 		} else {
 			player1.xVel = player1.maxSpeed;
 		}
 	} else {
-		if(player1.xVel > 0){
+		if (player1.xVel > 0) {
 			player1.xVel -= player1.decel;
-			if(player1.xVel < 0) player1.xVel = 0;
+			if (player1.xVel < 0) player1.xVel = 0;
 		}
 	}
 
 	//PLAYER 2
 
-	if(upDown){
-		if(player2.yVel > -player2.maxSpeed){
-			player2.yVel -= player2.accel;	
+	if (upDown) {
+		if (player2.yVel > -player2.maxSpeed) {
+			player2.yVel -= player2.accel;
 		} else {
 			player2.yVel = -player2.maxSpeed;
 		}
 	} else {
-		if(player2.yVel < 0){
+		if (player2.yVel < 0) {
 			player2.yVel += player2.decel;
-			if(player2.yVel > 0) player2.yVel = 0;	
+			if (player2.yVel > 0) player2.yVel = 0;
 		}
 	}
-	if(downDown){
-		if(player2.yVel < player2.maxSpeed){
-			player2.yVel += player2.accel;	
+	if (downDown) {
+		if (player2.yVel < player2.maxSpeed) {
+			player2.yVel += player2.accel;
 		} else {
 			player2.yVel = player2.maxSpeed;
 		}
 	} else {
-		if(player2.yVel > 0){
+		if (player2.yVel > 0) {
 			player2.yVel -= player2.decel;
-			if(player2.yVel < 0) player2.yVel = 0;
+			if (player2.yVel < 0) player2.yVel = 0;
 		}
 	}
-	if(leftDown){
-		if(player2.xVel > -player2.maxSpeed){
-			player2.xVel -= player2.accel;	
+	if (leftDown) {
+		if (player2.xVel > -player2.maxSpeed) {
+			player2.xVel -= player2.accel;
 		} else {
 			player2.xVel = -player2.maxSpeed;
 		}
 	} else {
-		if(player2.xVel < 0){
+		if (player2.xVel < 0) {
 			player2.xVel += player2.decel;
-			if(player2.xVel > 0) player2.xVel = 0;	
+			if (player2.xVel > 0) player2.xVel = 0;
 		}
 	}
-	if(rightDown){
-		if(player2.xVel < player2.maxSpeed){
-			player2.xVel += player2.accel;	
+	if (rightDown) {
+		if (player2.xVel < player2.maxSpeed) {
+			player2.xVel += player2.accel;
 		} else {
 			player2.xVel = player2.maxSpeed;
 		}
 	} else {
-		if(player2.xVel > 0){
+		if (player2.xVel > 0) {
 			player2.xVel -= player2.decel;
-			if(player2.xVel < 0) player2.xVel = 0;
+			if (player2.xVel < 0) player2.xVel = 0;
 		}
 	}
 }
 
-document.onkeyup = function(e){
-	if(e.keyCode === 87){
+document.onkeyup = function (e) {
+	if (e.keyCode === 87) {
 		wDown = false;
 	}
-	if(e.keyCode === 65){
+	if (e.keyCode === 65) {
 		aDown = false;
 	}
-	if(e.keyCode === 68){
+	if (e.keyCode === 68) {
 		dDown = false;
 	}
-	if(e.keyCode === 83){
+	if (e.keyCode === 83) {
 		sDown = false;
 	}
-	if(e.keyCode === 38){
+	if (e.keyCode === 38) {
 		upDown = false;
 	}
-	if(e.keyCode === 37){
+	if (e.keyCode === 37) {
 		leftDown = false;
 	}
-	if(e.keyCode === 40){
+	if (e.keyCode === 40) {
 		downDown = false;
 	}
-	if(e.keyCode === 39){
+	if (e.keyCode === 39) {
 		rightDown = false;
 	}
 }
 
-document.onkeydown = function(e){
-	if(e.keyCode === 87){
+document.onkeydown = function (e) {
+	if (e.keyCode === 87) {
 		wDown = true;
 	}
-	if(e.keyCode === 65){
+	if (e.keyCode === 65) {
 		aDown = true;
 	}
-	if(e.keyCode === 68){
+	if (e.keyCode === 68) {
 		dDown = true;
 	}
-	if(e.keyCode === 83){
+	if (e.keyCode === 83) {
 		sDown = true;
 	}
-	if(e.keyCode === 38){
+	if (e.keyCode === 38) {
 		upDown = true;
 	}
-	if(e.keyCode === 37){
+	if (e.keyCode === 37) {
 		leftDown = true;
 	}
-	if(e.keyCode === 40){
+	if (e.keyCode === 40) {
 		downDown = true;
 	}
-	if(e.keyCode === 39){
+	if (e.keyCode === 39) {
 		rightDown = true;
 	}
 }
 
-function renderBall(){
+function renderBall() {
 	c.save();
 	c.beginPath();
-	c.fillStyle = "black";
-	c.arc(ball.x,ball.y,ball.size,0,Math.PI*2);
+	c.fillStyle = "transparent";
+	let img = new Image();
+	img.src = "bal.png";
+	c.drawImage(img,ball.x-20, ball.y-20, ball.size+20,ball.size+20);
+	c.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
 	c.fill();
 	c.closePath();
 	c.restore();
 }
 
-function renderPlayers(){
+function renderPlayers() {
 	c.save();
-	c.fillStyle = "red";
+	c.fillStyle = "transparent";
 	c.beginPath();
+	let img = new Image();
+	img.src = "2.png";
+	c.drawImage(img,player1.x-40, player1.y-40, 85,80);
 	c.arc(player1.x,player1.y,player1.size,0,Math.PI*2);
 	c.fill();
 	c.closePath();
 	c.beginPath();
-	c.fillStyle = "blue";
-	c.arc(player2.x,player2.y,player2.size,0,Math.PI*2);
+	let img2 = new Image();
+	img2.src = "1.png";
+	c.drawImage(img2,player2.x-40, player2.y-40, 85,80);
+	c.arc(player2.x,player2.y,player1.size,0,Math.PI*2);
 	c.fill();
 	c.closePath();
 	c.restore();
 }
 
-function renderGates(){
-    let With = 15;
+function renderGates() {
+	let With = 21;
 	c.save();
 	c.beginPath();
-	c.moveTo(0,180);
-	c.lineTo(0,330);
-	c.strokeStyle = "red";
+	c.moveTo(0, 180);
+	c.lineTo(0, 330);
+	c.strokeStyle = "white";
 	c.lineWidth = With;
 	c.stroke();
 	c.closePath();
 	c.beginPath();
-	c.moveTo(canvas.width,180);
-	c.lineTo(canvas.width,330);
-	
+	c.moveTo(canvas.width, 180);
+	c.lineTo(canvas.width, 330);
+
 	c.lineWidth = With;
 	c.stroke();
 	c.closePath();
@@ -403,6 +411,6 @@ function renderGates(){
 // 	c.restore();
 // }
 
-function clear(){
-	c.clearRect(0,0,canvas.width,canvas.height);
+function clear() {
+	c.clearRect(0, 0, canvas.width, canvas.height);
 }
