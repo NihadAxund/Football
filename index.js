@@ -1,6 +1,8 @@
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
-var out = document.getElementById("out");
+var PLY_1 = document.get = document.getElementById("PLY_1");
+var PLY_2 = document.get = document.getElementById("PLY_2");
+
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 var init = requestAnimationFrame(start);
@@ -28,7 +30,17 @@ function start() {
 	renderPlayers();
 	renderBall();
 
-	out.innerHTML = "Player 1 Score: " + player1.score + "<br>Player 2 Score: " + player2.score;
+
+	PLY_1.innerHTML = "Player 1 Score: " + player1.score;
+	PLY_2.innerHTML = "Player 2 Score: " + player2.score;
+
+	if(player1.score>player2.score){
+
+	}
+	else{
+		
+	}
+
 	requestAnimationFrame(start);
 }
 
@@ -239,7 +251,7 @@ function checkKeyboardStatus() {
 		}
 	}
 
-	//PLAYER 2
+
 
 	if (upDown) {
 		if (player2.yVel > -player2.maxSpeed) {
